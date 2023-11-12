@@ -14,15 +14,31 @@ function setUpInput() {
 async function handleInput(e) {
 	switch (e.key) {
 		case "ArrowUp":
+			if (!canMoveUp()) {
+				setUpInput();
+				return;
+			}
 			await moveUp();
 			break;
 		case "ArrowDown":
+			if (!canMoveDown()) {
+				setUpInput();
+				return;
+			}
 			await moveDown();
 			break;
 		case "ArrowLeft":
+			if (!canMoveLeft()) {
+				setUpInput();
+				return;
+			}
 			await moveLeft();
 			break;
 		case "ArrowRight":
+			if (!canMoveRight()) {
+				setUpInput();
+				return;
+			}
 			await moveRight();
 			break;
 		default:
@@ -79,4 +95,31 @@ function slideTiles(cells) {
 			return promises;
 		})
 	);
+}
+
+function canMoveUp() {
+	return canMove(grid.cellsByColumn);
+}
+
+function canMoveDown() {
+	return canMove(grid.cellsByColumn.map((column) => [...column].reverse()));
+}
+
+function canMoveLeft() {
+	return canMove(grid.cellsByRow);
+}
+
+function canMoveRight() {
+	return canMove(grid.cellsByRow.map((row) => [...row].reverse()));
+}
+
+function canMove(cells) {
+	return cells.some((group) => {
+		return group.some((cell, index) => {
+			if (index === 0) return false;
+			if (!cell.tile) return false;
+			const moveToCell = group[index - 1];
+			return moveToCell.canAccept(cell);
+		});
+	});
 }
