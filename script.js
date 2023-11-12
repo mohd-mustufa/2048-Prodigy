@@ -45,10 +45,19 @@ async function handleInput(e) {
 			setUpInput();
 			return;
 	}
-	setUpInput();
 	grid.cells.forEach((cell) => cell.mergeTiles());
+
 	const newTile = new Tile(gameBoard);
 	grid.randomEmptyCell().tile = newTile;
+
+	if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
+		newTile.awaitForTransition(true).then(() => {
+			alert("Game Over");
+		});
+		return;
+	}
+
+	setUpInput();
 }
 
 function moveUp() {
