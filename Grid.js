@@ -19,6 +19,10 @@ export default class Grid {
 		});
 	}
 
+	get cells() {
+		return this.#cells;
+	}
+
 	get cellsByRow() {
 		return this.#cells.reduce((cellGrid, cell) => {
 			cellGrid[cell.y] = cellGrid[cell.y] || [];
@@ -50,7 +54,7 @@ class Cell {
 	#x;
 	#y;
 	#tile;
-	#mergeCell;
+	#mergeTile;
 
 	constructor(cellElement, x, y) {
 		this.#cell = cellElement;
@@ -77,22 +81,29 @@ class Cell {
 		this.#tile.y = this.#y;
 	}
 
-	get mergeCell() {
-		return this.#mergeCell;
+	get mergeTile() {
+		return this.#mergeTile;
 	}
 
-	set mergeCell(value) {
-		this.#mergeCell = value;
+	set mergeTile(value) {
+		this.#mergeTile = value;
 		if (value == null) return;
-		this.#mergeCell.x = this.#x;
-		this.#mergeCell.y = this.#y;
+		this.#mergeTile.x = this.#x;
+		this.#mergeTile.y = this.#y;
 	}
 
 	canAccept(cell) {
 		return (
 			this.tile == null ||
-			(this.#mergeCell == null && this.tile.value == cell.tile.value)
+			(this.#mergeTile == null && this.tile.value == cell.tile.value)
 		);
+	}
+
+	mergeTiles() {
+		if (!this.#tile || !this.#mergeTile) return;
+		this.#tile.value = this.#tile.value + this.#mergeTile.value;
+		this.#mergeTile.remove();
+		this.#mergeTile = null;
 	}
 }
 
