@@ -19,6 +19,22 @@ export default class Grid {
 		});
 	}
 
+	get cellsByRow() {
+		return this.#cells.reduce((cellGrid, cell) => {
+			cellGrid[cell.y] = cellGrid[cell.y] || [];
+			cellGrid[cell.y][cell.x] = cell;
+			return cellGrid;
+		}, []);
+	}
+
+	get cellsByColumn() {
+		return this.#cells.reduce((cellGrid, cell) => {
+			cellGrid[cell.x] = cellGrid[cell.x] || [];
+			cellGrid[cell.x][cell.y] = cell;
+			return cellGrid;
+		}, []);
+	}
+
 	get #emptyCells() {
 		return this.#cells.filter((cell) => cell.tile == null);
 	}
@@ -34,11 +50,20 @@ class Cell {
 	#x;
 	#y;
 	#tile;
+	#mergeCell;
 
 	constructor(cellElement, x, y) {
 		this.#cell = cellElement;
 		this.#x = x;
 		this.#y = y;
+	}
+
+	get x() {
+		return this.#x;
+	}
+
+	get y() {
+		return this.#y;
 	}
 
 	get tile() {
@@ -47,8 +72,27 @@ class Cell {
 
 	set tile(value) {
 		this.#tile = value;
+		if (value == null) return;
 		this.#tile.x = this.#x;
 		this.#tile.y = this.#y;
+	}
+
+	get mergeCell() {
+		return this.#mergeCell;
+	}
+
+	set mergeCell(value) {
+		this.#mergeCell = value;
+		if (value == null) return;
+		this.#mergeCell.x = this.#x;
+		this.#mergeCell.y = this.#y;
+	}
+
+	canAccept(cell) {
+		return (
+			this.tile == null ||
+			(this.#mergeCell == null && this.tile.value == cell.tile.value)
+		);
 	}
 }
 
