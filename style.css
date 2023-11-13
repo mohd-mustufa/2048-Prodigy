@@ -67,8 +67,8 @@ body {
 }
 
 .new-game {
-	background-color: #aaa;
-	color: #333;
+	background-color: #636262;
+	color: #fff;
 	border: none;
 	border-radius: 1vmin;
 	font-size: 1.1rem;
@@ -84,7 +84,7 @@ body {
 
 .score-div {
 	min-width: 5rem;
-	background-color: #aaa;
+	background-color: #ccc;
 	color: #333;
 	font-size: 1.1rem;
 	font-weight: 600;
