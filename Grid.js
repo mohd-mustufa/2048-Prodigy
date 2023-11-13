@@ -102,8 +102,23 @@ class Cell {
 	mergeTiles() {
 		if (!this.#tile || !this.#mergeTile) return;
 		this.#tile.value = this.#tile.value + this.#mergeTile.value;
+		this.#populateScores();
 		this.#mergeTile.remove();
 		this.#mergeTile = null;
+	}
+
+	#populateScores() {
+		const currentScoreContainer = document.getElementById("score");
+		const bestScoreContainer = document.getElementById("best");
+		const currentScore =
+			parseInt(currentScoreContainer.innerText) + parseInt(this.#tile.value);
+		const bestScore = localStorage.getItem("2048-whiz-highscore") || 0;
+
+		currentScoreContainer.innerText = currentScore;
+		if (currentScore > bestScore) {
+			localStorage.setItem("2048-whiz-highscore", currentScore);
+			bestScoreContainer.innerText = currentScore;
+		}
 	}
 }
 

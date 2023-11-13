@@ -2,9 +2,24 @@ import Grid from "./Grid.js";
 import Tile from "./Tile.js";
 
 const gameBoard = document.getElementById("game-board");
-const grid = new Grid(gameBoard);
-grid.randomEmptyCell().tile = new Tile(gameBoard);
-grid.randomEmptyCell().tile = new Tile(gameBoard);
+const newGame = document.getElementById("new-game");
+
+let grid;
+function startNewGame() {
+	const currentScore = document.getElementById("score");
+	const bestScore = document.getElementById("best");
+	const allTimeBest = localStorage.getItem("2048-whiz-highscore") || 0;
+	currentScore.innerText = "0";
+	bestScore.innerText = allTimeBest;
+
+	gameBoard.innerHTML = "";
+	grid = new Grid(gameBoard);
+	grid.randomEmptyCell().tile = new Tile(gameBoard);
+	grid.randomEmptyCell().tile = new Tile(gameBoard);
+}
+
+newGame.addEventListener("click", startNewGame);
+startNewGame();
 setUpInput();
 
 function setUpInput() {
