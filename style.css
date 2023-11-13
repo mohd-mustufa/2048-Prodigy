@@ -103,3 +103,37 @@ body {
 	content: "Best";
 	display: block;
 }
+
+.game-over {
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: rgba(182, 174, 174, 0.5);
+	color: #202020;
+	font-size: 3rem;
+	font-weight: bold;
+	border-radius: 1vmin;
+	z-index: 10;
+}
+
+.game-over button {
+	margin: 1.5rem;
+	padding: 1rem 2rem;
+	border: 1px solid #aaa;
+	border-radius: 0.5rem;
+	font-size: 1.4rem;
+	font-weight: 600;
+	background-color: #636262;
+	color: #fff;
+	cursor: pointer;
+}
+
+.game-over.show {
+	display: flex;
+}

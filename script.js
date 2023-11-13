@@ -6,21 +6,41 @@ const newGame = document.getElementById("new-game");
 
 let grid;
 function startNewGame() {
+	// Setting the score
 	const currentScore = document.getElementById("score");
 	const bestScore = document.getElementById("best");
 	const allTimeBest = localStorage.getItem("2048-whiz-highscore") || 0;
 	currentScore.innerText = "0";
 	bestScore.innerText = allTimeBest;
 
+	// Clearing the board and creating new board
 	gameBoard.innerHTML = "";
 	grid = new Grid(gameBoard);
 	grid.randomEmptyCell().tile = new Tile(gameBoard);
 	grid.randomEmptyCell().tile = new Tile(gameBoard);
+
+	// Adding the game-over div
+	const gameOverDiv = document.createElement("div");
+	gameOverDiv.className = "game-over";
+	gameOverDiv.id = "game-over";
+
+	const gameOverTextDiv = document.createElement("div");
+	gameOverTextDiv.className = "game-over-text";
+	gameOverTextDiv.textContent = "Game Over";
+	gameOverDiv.appendChild(gameOverTextDiv);
+
+	const playAgainButton = document.createElement("button");
+	playAgainButton.id = "restart";
+	playAgainButton.textContent = "Play Again";
+	playAgainButton.addEventListener("click", () => startNewGame());
+	gameOverDiv.appendChild(playAgainButton);
+
+	gameBoard.appendChild(gameOverDiv);
+	setUpInput();
 }
 
-newGame.addEventListener("click", startNewGame);
+newGame.addEventListener("click", () => startNewGame());
 startNewGame();
-setUpInput();
 
 function setUpInput() {
 	document.addEventListener("keydown", handleInput, { once: true });
@@ -66,8 +86,9 @@ async function handleInput(e) {
 	grid.randomEmptyCell().tile = newTile;
 
 	if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
+		const gameOver = document.getElementById("game-over");
 		newTile.awaitForTransition(true).then(() => {
-			alert("Game Over");
+			gameOver.classList.add("show");
 		});
 		return;
 	}
