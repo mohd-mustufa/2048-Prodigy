@@ -6,12 +6,12 @@
 }
 
 body {
-	margin: 0;
+	margin: 40px 0 40px 0;
+	padding: 0 20px;
 	background-color: #333;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
 	font-size: 7.5vmin;
 }
 
@@ -63,15 +63,15 @@ body {
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-end;
-	margin: 1rem 0;
+	margin-bottom: 10px;
 }
 
-.new-game {
+.new-game-btn {
 	background-color: #636262;
 	color: #fff;
 	border: none;
 	border-radius: 1vmin;
-	font-size: 1.1rem;
+	font-size: 15px;
 	font-weight: 600;
 	padding: 0.8rem;
 	cursor: pointer;
@@ -83,15 +83,19 @@ body {
 }
 
 .score-div {
-	min-width: 5rem;
+	min-width: 70px;
 	background-color: #ccc;
 	color: #333;
-	font-size: 1.1rem;
+	font-size: 16px;
 	font-weight: 600;
 	border: none;
 	border-radius: 1vmin;
-	margin-right: 1rem;
-	padding: 0.8rem;
+	margin-right: 5px;
+	padding: 5px;
+}
+
+.score-div > #score {
+	margin-right: 5px;
 }
 
 #score::before {
@@ -107,7 +111,7 @@ body {
 }
 
 .game-over {
-	display: none;
+	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
@@ -118,18 +122,21 @@ body {
 	right: 0;
 	background-color: rgba(182, 174, 174, 0.5);
 	color: #202020;
-	font-size: 3rem;
+	font-size: 40px;
 	font-weight: bold;
 	border-radius: 1vmin;
 	z-index: 10;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 1000ms ease, visibility 1000ms ease;
 }
 
 .game-over button {
-	margin: 1.5rem;
-	padding: 1rem 2rem;
+	margin: 1.2rem;
+	padding: 0.9rem 1.6rem;
 	border: 1px solid #aaa;
-	border-radius: 0.5rem;
-	font-size: 1.4rem;
+	border-radius: 6px;
+	font-size: 1.1rem;
 	font-weight: 600;
 	background-color: #636262;
 	color: #fff;
@@ -137,5 +144,6 @@ body {
 }
 
 .game-over.show {
-	display: flex;
+	opacity: 1;
+	visibility: visible;
 }

@@ -2,7 +2,7 @@ import Grid from "./Grid.js";
 import Tile from "./Tile.js";
 
 const gameBoard = document.getElementById("game-board");
-const newGame = document.getElementById("new-game");
+const newGameBtn = document.getElementById("new-game-btn");
 
 let grid;
 function startNewGame() {
@@ -39,7 +39,7 @@ function startNewGame() {
 	setUpInput();
 }
 
-newGame.addEventListener("click", () => startNewGame());
+newGameBtn.addEventListener("click", () => startNewGame());
 startNewGame();
 
 function setUpInput() {
@@ -88,7 +88,9 @@ async function handleInput(e) {
 	if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
 		const gameOver = document.getElementById("game-over");
 		newTile.awaitForTransition(true).then(() => {
-			gameOver.classList.add("show");
+			setTimeout(() => {
+				gameOver.classList.add("show");
+			}, 500);
 		});
 		return;
 	}
