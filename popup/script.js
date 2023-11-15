@@ -5,21 +5,58 @@ const gameBoard = document.getElementById("game-board");
 const newGameBtn = document.getElementById("new-game-btn");
 
 let grid;
-function startNewGame() {
-	// Setting the score
+function startNewGame(btnClick = false) {
+	if (btnClick) {
+		localStorage.setItem("2048-whiz-score", 0);
+	}
+	if (!btnClick && localStorage.getItem("2048-whiz-gameState")) {
+		generatePrevBoard();
+	} else {
+		generateNewBoard();
+	}
+
+	setScore();
+	addGameOverDiv();
+	setUpInput();
+}
+
+newGameBtn.addEventListener("click", () => startNewGame(true));
+startNewGame();
+
+// Setting the score
+function setScore() {
 	const currentScore = document.getElementById("score");
 	const bestScore = document.getElementById("best");
-	const allTimeBest = localStorage.getItem("2048-whiz-highscore") || 0;
-	currentScore.innerText = "0";
-	bestScore.innerText = allTimeBest;
+	currentScore.innerText = localStorage.getItem("2048-whiz-score") || 0;
+	bestScore.innerText = localStorage.getItem("2048-whiz-highscore") || 0;
+}
 
-	// Clearing the board and creating new board
+// Generating previous state of the board
+function generatePrevBoard() {
+	const prevState = JSON.parse(localStorage.getItem("2048-whiz-gameState"));
+	gameBoard.innerHTML = "";
+	grid = new Grid(gameBoard);
+	grid.cells.forEach((cell, index) => {
+		if (prevState[index] != 0) {
+			cell.tile = new Tile(gameBoard, prevState[index]);
+		}
+	});
+}
+
+// Clearing the board and generating new board
+function generateNewBoard() {
 	gameBoard.innerHTML = "";
 	grid = new Grid(gameBoard);
 	grid.randomEmptyCell().tile = new Tile(gameBoard);
 	grid.randomEmptyCell().tile = new Tile(gameBoard);
+	localStorage.setItem(
+		"2048-whiz-gameState",
+		JSON.stringify(grid.cellsByValue.flat())
+	);
+}
 
-	// Adding the game-over div
+// Adds the game-over div to the the gameBoard
+function addGameOverDiv() {
 	const gameOverDiv = document.createElement("div");
 	gameOverDiv.className = "game-over";
 	gameOverDiv.id = "game-over";
@@ -32,15 +69,11 @@ function startNewGame() {
 	const playAgainButton = document.createElement("button");
 	playAgainButton.id = "restart";
 	playAgainButton.textContent = "Play Again";
-	playAgainButton.addEventListener("click", () => startNewGame());
+	playAgainButton.addEventListener("click", () => startNewGame(true));
 	gameOverDiv.appendChild(playAgainButton);
 
 	gameBoard.appendChild(gameOverDiv);
-	setUpInput();
 }
-
-newGameBtn.addEventListener("click", () => startNewGame());
-startNewGame();
 
 function setUpInput() {
 	document.addEventListener("keydown", handleInput, { once: true });
@@ -84,9 +117,15 @@ async function handleInput(e) {
 
 	const newTile = new Tile(gameBoard);
 	grid.randomEmptyCell().tile = newTile;
+	localStorage.setItem(
+		"2048-whiz-gameState",
+		JSON.stringify(grid.cellsByValue.flat())
+	);
 
 	if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
 		const gameOver = document.getElementById("game-over");
+		localStorage.setItem("2048-whiz-score", 0);
+		localStorage.removeItem("2048-whiz-gameState");
 		newTile.awaitForTransition(true).then(() => {
 			setTimeout(() => {
 				gameOver.classList.add("show");

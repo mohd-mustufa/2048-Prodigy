@@ -19,6 +19,14 @@ export default class Grid {
 		});
 	}
 
+	get cellsByValue() {
+		return this.#cells.reduce((cellGrid, cell) => {
+			cellGrid[cell.y] = cellGrid[cell.y] || [];
+			cellGrid[cell.y][cell.x] = cell.tile?.value || 0;
+			return cellGrid;
+		}, []);
+	}
+
 	get cells() {
 		return this.#cells;
 	}
@@ -115,6 +123,7 @@ class Cell {
 		const bestScore = localStorage.getItem("2048-whiz-highscore") || 0;
 
 		currentScoreContainer.innerText = currentScore;
+		localStorage.setItem("2048-whiz-score", currentScore);
 		if (currentScore > bestScore) {
 			localStorage.setItem("2048-whiz-highscore", currentScore);
 			bestScoreContainer.innerText = currentScore;
