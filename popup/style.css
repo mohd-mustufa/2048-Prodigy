@@ -97,11 +97,13 @@ body {
 #score::before {
 	content: "Score";
 	display: block;
+	color: rgba(0, 0, 0, 0.6);
 }
 
 #best::before {
 	content: "Best";
 	display: block;
+	color: rgba(0, 0, 0, 0.6);
 }
 
 .game-over {

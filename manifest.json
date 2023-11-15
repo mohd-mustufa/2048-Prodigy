@@ -1,0 +1,18 @@
+{
+	"name": "2048 Whiz",
+	"description": "An easy and fun game to play in your free time.",
+	"version": "1.0",
+	"manifest_version": 3,
+	"background": {
+		"service_worker": "background.js"
+	},
+	"action": {
+		"default_popup": "/popup/index.html"
+	},
+	"icons": {
+		"16": "images/img_16.ico",
+		"32": "images/img_32.ico",
+		"48": "images/img_48.ico",
+		"128": "images/img_128.ico"
+	}
+}
