@@ -1,11 +1,9 @@
 {
-	"name": "2048 Whiz",
+	"name": "2048 Prodigy",
 	"description": "An easy and fun game to play in your free time.",
 	"version": "1.0",
 	"manifest_version": 3,
-	"background": {
-		"service_worker": "background.js"
-	},
+
 	"action": {
 		"default_popup": "/popup/index.html"
 	},
