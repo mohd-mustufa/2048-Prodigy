@@ -14,7 +14,7 @@ Welcome to 2048 Prodigy, a Chrome extension that brings the classic 2048 game to
 
 1. **Chrome Web Store:**
 
-   - Visit the [2048 Prodigy page on the Chrome Web Store](#) and click on "Add to Chrome" to install the extension.
+   - Visit the [2048 Prodigy page on the Chrome Web Store](https://chromewebstore.google.com/detail/2048-prodigy/pbmflncmhbpagbhaanepaemcniocljhp) and click on "Add to Chrome" to install the extension.
 
 2. **Manual Installation:**
    - Download the extension files from the [GitHub](#) page.
